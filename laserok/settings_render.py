@@ -34,6 +34,9 @@ DATABASES = {
     )
 }
 
+# Убираем channel_binding — psycopg v3 на Windows/Neon рвёт соединение с ним
+DATABASES["default"].setdefault("OPTIONS", {}).pop("channel_binding", None)
+
 DATABASES["default"]["CONN_HEALTH_CHECKS"] = True
 DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 
