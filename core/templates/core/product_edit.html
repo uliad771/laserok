@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}{% if product %}Редактирование товара{% else %}Новый товар{% endif %} — Лазер Мастер ОК{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'css/site-palette.css' %}?v=2">
+<div class="app-shell">
+  {% include "core/_sidebar.html" with active="products" %}
+  <main class="workspace">
+    <header class="page-top"><div><h1>{% if product %}Редактирование товара{% else %}Добавить товар{% endif %}</h1><p>Характеристики, цена, склад и фотография</p></div><a class="top-action muted" href="{% url 'products' %}">← К списку товаров</a></header>
+    {% if form %}
+    <form method="post" enctype="multipart/form-data" class="pe-form">
+      {% csrf_token %}
+      {% if form.errors %}<div class="pe-alert" role="alert">Не удалось сохранить. Исправьте отмеченные поля. {{ form.non_field_errors }}</div>{% endif %}
+      <section class="pe-panel"><h2>Основные данные</h2><div class="pe-grid">
+        <div class="pe-field"><label for="{{ form.name.id_for_label }}">Название товара *</label>{{ form.name }}{{ form.name.errors }}</div>
+        <div class="pe-field"><label for="{{ form.sku.id_for_label }}">Артикул — необязательно</label>{{ form.sku }}{{ form.sku.errors }}<small>{{ form.sku.help_text }}</small></div>
+        <div class="pe-field"><label for="{{ form.barcode.id_for_label }}">Штрихкод</label>{{ form.barcode }}{{ form.barcode.errors }}</div>
+        <div class="pe-field"><label for="{{ form.category.id_for_label }}">Категория</label>{{ form.category }}{{ form.category.errors }}</div>
+        <div class="pe-field pe-wide"><label for="{{ form.description.id_for_label }}">Описание</label>{{ form.description }}{{ form.description.errors }}</div>
+      </div></section>
+      <section class="pe-panel"><h2>Цена и склад</h2><div class="pe-grid">
+        <div class="pe-field"><label for="{{ form.price.id_for_label }}">Розничная цена, ₽ *</label>{{ form.price }}{{ form.price.errors }}</div>
+        <div class="pe-field"><label for="{{ form.cost.id_for_label }}">Себестоимость, ₽</label>{{ form.cost }}{{ form.cost.errors }}</div>
+        <div class="pe-field"><label for="{{ form.stock.id_for_label }}">Доступный остаток, шт.</label>{{ form.stock }}{{ form.stock.errors }}</div>
+        <div class="pe-field"><label for="{{ form.min_stock.id_for_label }}">Минимальный запас, шт.</label>{{ form.min_stock }}{{ form.min_stock.errors }}<small>Используется для предупреждения о низком остатке.</small></div>
+      </div></section>
+      <section class="pe-panel"><h2>Фотография товара</h2><div class="pe-photo-layout"><div class="pe-field"><label for="{{ form.image.id_for_label }}">Загрузить или заменить фото</label>{{ form.image }}{{ form.image.errors }}<small>JPG, PNG, WebP. До 5 МБ. Для сохранения прежней фотографии не выбирайте новый файл.</small></div><div class="pe-preview">{% if product.image %}<img id="pePreview" src="{{ product.image.url }}" alt="Фото товара">{% else %}<img id="pePreview" alt="Предпросмотр" hidden><span id="pePlaceholder">Нет фотографии</span>{% endif %}</div></div></section>
+      <section class="pe-panel"><h2>Доступность</h2><label class="pe-check">{{ form.is_active }} <span>Активен — показывать в кассе</span></label>{{ form.is_active.errors }}<label class="pe-check">{{ form.is_public }} <span>Показывать на публичной витрине</span></label>{{ form.is_public.errors }}</section>
+      <div class="pe-actions"><button class="top-action" type="submit">Сохранить товар</button><a class="top-action muted" href="{% url 'products' %}">Отмена</a></div>
+    </form>
+    {% else %}
+    <div class="pe-alert" role="alert"><h2>Редактор не подключён</h2><p>Обработчик страницы не передал форму. Подключите product_editor.product_edit в core/urls.py по README из обновления.</p></div>
+    {% endif %}
+  </main>
+</div>
+<script>
+(function(){const input=document.getElementById('id_image'),image=document.getElementById('pePreview');if(!input||!image)return;let url;input.accept='image/jpeg,image/png,image/webp';input.addEventListener('change',()=>{if(url)URL.revokeObjectURL(url);const file=input.files[0];if(!file)return;url=URL.createObjectURL(file);image.src=url;image.hidden=false;const placeholder=document.getElementById('pePlaceholder');if(placeholder)placeholder.hidden=true});})();
+</script>
+{% endblock %}

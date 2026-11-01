@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}
+{% block title %}Сотрудник — LaserOK{% endblock %}
+{% block body %}
+<div class="app-shell">
+  {% include "core/_sidebar.html" with active="employees" %}
+  <main class="workspace"><header class="page-top"><div><h1>{% if employee %}Редактирование сотрудника{% else %}Новый сотрудник{% endif %}</h1><p>Создание учётной записи сотрудника</p></div><a class="top-action muted" href="{% url 'employees' %}">← Назад</a></header><section class="content-card form-card"><form method="post" class="product-form">{% csrf_token %}<div class="form-columns"><div><label>Логин</label><input name="username" value="{{ employee.username|default:'' }}" required></div><div><label>Имя</label><input name="first_name" value="{{ employee.first_name|default:'' }}"></div></div><div class="form-columns"><div><label>Фамилия</label><input name="last_name" value="{{ employee.last_name|default:'' }}"></div><div><label>Пароль {% if employee %}<small>(оставьте пустым, чтобы не менять)</small>{% endif %}</label><input name="password" type="password" {% if not employee %}required{% endif %}></div></div><label class="check-line"><input type="checkbox" name="is_admin" {% if employee.is_superuser %}checked{% endif %}> Администратор — полный доступ</label><button class="top-action" type="submit">Сохранить</button></form></section></main>
+</div>{% endblock %}

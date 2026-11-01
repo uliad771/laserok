@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Касса — Лазер Мастер ОК{% endblock %}
+{% block body %}
+<div class="app-shell">
+{% include "core/_sidebar.html" with active="pos" %}
+<main class="workspace">
+<header class="page-top"><div><h1>Кассовый терминал</h1><p>Продажи и контроль наличия</p></div><a class="top-action muted" href="{% url 'shift' %}">Смена</a></header>
+<section id="posApp" data-catalog-url="{% url 'pos_catalog_fixed' %}" data-checkout-url="{% url 'api_checkout' %}">
+<form id="csrfForm" hidden>{% csrf_token %}</form>
+<div class="pos-layout">
+<section class="catalog-panel">
+<form class="search-bar" id="searchForm"><input id="search" type="search" placeholder="Название, артикул или штрихкод"><button type="submit">Найти</button></form>
+<p id="catalogStatus" role="status">Загрузка товаров…</p>
+<button type="button" id="retryCatalog" class="small-btn" hidden>Повторить загрузку</button>
+<div class="products-grid" id="products"></div>
+</section>
+<aside class="checkout-card"><h2>Текущий чек</h2><div class="cart-items" id="cart"></div><div class="checkout-total"><span>Итого</span><strong id="total">0 ₽</strong></div><div class="payment-actions"><button type="button" class="cash" data-payment="cash">Наличные</button><button type="button" class="card" data-payment="card">Карта / СБП</button></div><button type="button" class="clear-cart" id="clearCart">Очистить чек</button></aside>
+</div>
+<div id="notice" class="green-notice" role="status" hidden></div>
+<noscript>Для работы кассы включите JavaScript.</noscript>
+</section>
+</main></div>
+<script src="{% static 'js/pos.js' %}?v=20261030-3" defer></script>
+{% endblock %}

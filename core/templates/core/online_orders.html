@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}
+{% block title %}Онлайн-заказы — LaserOK{% endblock %}
+{% block body %}
+<div class="app-shell">
+  {% include "core/_sidebar.html" with active="orders" %}
+  <main class="workspace"><header class="page-top"><div><h1>Онлайн-заказы</h1><p>Заявки с публичной витрины</p></div></header><section class="content-card"><div class="table-wrap"><table><thead><tr><th>Заказ</th><th>Клиент</th><th>Телефон</th><th>Получение</th><th>Сумма</th><th>Статус</th><th>Действия</th></tr></thead><tbody>{% for o in orders %}<tr><td>{{ o.number }}</td><td>{{ o.customer_name }}</td><td>{{ o.phone }}</td><td>{{ o.delivery }}</td><td>{{ o.total }} ₽</td><td>{{ o.get_status_display }}</td><td><div class="row-actions"><form method="post" action="{% url 'online_order_action' o.pk 'confirm' %}">{% csrf_token %}<button class="small-btn" type="submit">Подтвердить</button></form><form method="post" action="{% url 'online_order_action' o.pk 'complete' %}">{% csrf_token %}<button class="small-btn success" type="submit">Выполнен</button></form><form method="post" action="{% url 'online_order_action' o.pk 'cancel' %}">{% csrf_token %}<button class="small-btn danger" type="submit">Отменить</button></form></div></td></tr>{% empty %}<tr><td colspan="7" class="empty-cell">Онлайн-заказов пока нет.</td></tr>{% endfor %}</tbody></table></div></section></main>
+</div>{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "core/base.html" %}
+{% block title %}Смена — LaserOK{% endblock %}
+
+{% block body %}
+<div class="app-shell">
+  {% include "core/_sidebar.html" with active="shift" %}
+
+  <main class="workspace">
+    <header class="page-top">
+      <div>
+        <h1>Рабочая смена</h1>
+        <p>Открытие, закрытие и Z-отчёт по продажам</p>
+      </div>
+    </header>
+
+    <section class="metrics">
+      <article><span>Статус</span><b>{% if shift %}Открыта{% else %}Закрыта{% endif %}</b></article>
+      <article><span>Чеков</span><b>{{ checks }}</b></article>
+      <article><span>Товаров продано</span><b>{{ items_count }} шт.</b></article>
+      <article><span>Выручка</span><b>{{ revenue }} ₽</b></article>
+    </section>
+
+    <section class="content-card shift-actions">
+      <form method="post" action="{% url 'open_shift' %}">
+        {% csrf_token %}
+        <button class="top-action" {% if shift %}disabled{% endif %}>Открыть смену</button>
+      </form>
+      <form method="post" action="{% url 'close_shift' %}">
+        {% csrf_token %}
+        <button class="small-btn warning" {% if not shift %}disabled{% endif %}>Закрыть смену и показать Z-отчёт</button>
+      </form>
+    </section>
+
+    {% if shift %}
+    <section class="content-card">
+      <h2>Проданные товары в текущей смене</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Название товара</th><th>Количество</th><th>Выручка</th></tr></thead>
+          <tbody>
+            {% for item in sold_items %}
+            <tr><td>{{ item.name }}</td><td>{{ item.quantity }} шт.</td><td>{{ item.revenue }} ₽</td></tr>
+            {% empty %}
+            <tr><td colspan="3" class="empty-cell">Продаж в текущей смене пока нет.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if closed_report and not shift %}
+    <section class="content-card z-report">
+      <div class="z-report-title">
+        <div>
+          <h2>Z-отчёт закрытой смены</h2>
+          <p class="muted">Кассир: {{ closed_report.shift.user.username }} · Закрыта: {{ closed_report.shift.closed_at|date:"d.m.Y H:i" }}</p>
+        </div>
+        <span class="badge in">Смена закрыта</span>
+      </div>
+
+      <section class="metrics report-metrics">
+        <article><span>Чеков</span><b>{{ closed_report.checks }}</b></article>
+        <article><span>Товаров продано</span><b>{{ closed_report.items_count }} шт.</b></article>
+        <article><span>Наличные</span><b>{{ closed_report.cash }} ₽</b></article>
+        <article><span>Карта / СБП</span><b>{{ closed_report.card }} ₽</b></article>
+        <article><span>Итого</span><b>{{ closed_report.revenue }} ₽</b></article>
+      </section>
+
+      <h3>Товары, проданные за смену</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Название товара</th><th>Количество</th><th>Выручка</th></tr></thead>
+          <tbody>
+            {% for item in closed_report.items %}
+            <tr><td>{{ item.name }}</td><td>{{ item.quantity }} шт.</td><td>{{ item.revenue }} ₽</td></tr>
+            {% empty %}
+            <tr><td colspan="3" class="empty-cell">За смену продаж не было.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Разбивка по способам оплаты</h3>
+      <div class="payment-summary">
+        <div><span>Наличные</span><strong>{{ closed_report.cash }} ₽</strong></div>
+        <div><span>Карта / СБП</span><strong>{{ closed_report.card }} ₽</strong></div>
+      </div>
+    </section>
+    {% endif %}
+  </main>
+</div>
+{% endblock %}

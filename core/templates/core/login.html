@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+{% block title %}Вход — LaserOK{% endblock %}
+{% block body %}
+<main class="auth"><section class="auth-card">
+  <div class="brand">Laser<span>OK</span></div><h1>Вход в систему</h1><p>POS-терминал, складской учёт и отчётность</p>
+  {% if form.errors %}<div class="alert">Неверный логин или пароль.</div>{% endif %}
+  <form method="post" class="auth-form">{% csrf_token %}
+    <label for="id_username">Логин</label>{{ form.username }}
+    <label for="id_password">Пароль</label>{{ form.password }}
+    <button class="top-action full" type="submit">Войти</button>
+  </form>
+  <p class="demo">Демо-доступ: <b>admin / admin</b>, <b>kassir / kassir</b></p>
+</section></main>
+{% endblock %}

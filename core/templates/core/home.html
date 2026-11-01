@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% block title %}LaserOK — POS и склад{% endblock %}
+{% block body %}
+<main class="landing">
+  <section class="landing-hero"><div class="landing-content">
+    <a class="brand" href="{% url 'home' %}">Laser<span>OK</span></a>
+    <h1>Продажи, склад и касса<br>в одной системе</h1>
+    <p>Внутренняя веб-система для кассира, администратора и учёта товаров.</p>
+    {% if user.is_authenticated %}<a class="top-action" href="{% url 'pos' %}">Открыть кассу</a>{% else %}<a class="top-action" href="{% url 'login' %}">Войти в систему</a>{% endif %}
+  </div></section>
+  <section class="landing-section"><h2>Публичный каталог</h2><div class="public-grid">
+    {% for p in products %}<article class="public-product"><div class="public-photo">{% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">{% else %}{{ p.emoji|default:'📦' }}{% endif %}</div><div class="public-info"><span>{{ p.category }}</span><b>{{ p.name }}</b><strong>{{ p.price }} ₽</strong></div></article>{% empty %}<p class="muted">Товары для витрины пока не добавлены.</p>{% endfor %}
+  </div></section>
+</main>
+{% endblock %}

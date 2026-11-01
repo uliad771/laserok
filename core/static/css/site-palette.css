@@ -1,0 +1,246 @@
+/* ===========================================================
+   ЦВЕТА САЙТА — МЕНЯЙТЕ ТОЛЬКО ЗНАЧЕНИЯ В ЭТОМ БЛОКЕ.
+   #17482C: последняя C — латинская, не кириллическая С.
+   =========================================================== */
+:root {
+  --site-background: #638F5D;
+  --surface-background: #17482C;
+  --button-background: #f1b24a;
+  --button-text: #090606;
+  --main-text: #ffffffd5;
+  --secondary-text: #ffffff;
+  --surface-border: #000000;
+  --field-background: #cddb96;
+  --focus-color: #ffffff;
+  --error-background: #F7D9CD;
+  --error-text: #611E12;
+  --warning-background: #F5E5B7;
+  --warning-text: #3C2D0B;
+  --logo-background: #689c61;
+
+  /* Совместимость со всеми версиями шаблонов LaserOK. */
+  --bg:var(--site-background);--page:var(--site-background);
+  --sidebar:var(--surface-background);--panel:var(--surface-background);
+  --panel-2:var(--surface-background);--line:var(--surface-border);
+  --text:var(--main-text);--ink:var(--main-text);--muted:var(--secondary-text);
+  --green:var(--button-background);--blue:var(--button-background);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--site-background)!important;color:var(--main-text)!important}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+button,input,textarea,select{font:inherit}
+img{max-width:100%}
+[hidden]{display:none!important}
+a{color:var(--main-text)}
+h1,h2,h3,h4{color:var(--main-text)!important;line-height:1.25;overflow-wrap:anywhere}
+h1{font-size:clamp(24px,2.3vw,32px);margin:0 0 6px}
+h2{font-size:22px;margin:0 0 16px}
+p{overflow-wrap:anywhere}
+
+/* Каркас: меню не сжимается, содержимое не распирает страницу. */
+.app-shell,.layout,.app{display:flex!important;min-height:100vh;align-items:stretch;background:var(--site-background)!important}
+.sidebar{position:sticky;top:0;align-self:flex-start;flex:0 0 240px;width:240px;height:100vh;display:flex;flex-direction:column;padding:18px 12px;background:var(--surface-background)!important;border-right:1px solid var(--surface-border)!important;overflow-y:auto}
+.workspace,.main{flex:1;min-width:0;width:auto;padding:28px;background:var(--site-background)!important;color:var(--main-text)!important;overflow-x:clip}
+.side-nav{display:flex;flex-direction:column;gap:8px}
+.brand,.logo{display:block;padding:8px!important;margin:0 0 18px!important}
+.brand-logo{display:block;width:100%;max-width:215px;height:auto;object-fit:contain;background:var(--logo-background)!important;padding:8px;border-radius:12px}
+.sidebar-footer,.sidebar-bottom{margin-top:auto;padding-top:16px;border-top:1px solid var(--surface-border)!important}
+.page-top,.page-head,.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:24px}
+.page-top p,.page-head p,.sub,.muted,.profile,.userbox,.empty-cart,.stock,.product-stock,.pos-stock,.cat,#catalogStatus{color:var(--secondary-text)!important}
+
+/* Вставки: карточки, таблицы, формы, шапка, подвал. */
+.content-card,.panel,.card,.checkout-card,.auth-card,.login-card,.kpi,.metrics article,.pe-panel,.public-product,.product-card,.pos-card,.product,.feature,.category,.modal,.drawer-panel,.drawer,.hero-art,header:not(.page-top),footer,.landing-hero,.about,.custom{background:var(--surface-background)!important;color:var(--main-text)!important;border-color:var(--surface-border)!important;background-image:none!important}
+.content-card,.panel,.card,.pe-panel{min-width:0;border:1px solid var(--surface-border);border-radius:16px;padding:22px;margin-bottom:20px}
+.metrics,.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:16px;margin-bottom:20px}
+.metrics article,.kpi{padding:18px;border:1px solid var(--surface-border);border-radius:14px;min-width:0}
+.metrics article span,.kpi .label{color:var(--secondary-text)!important}
+.metrics article b,.kpi .value{display:block;font-size:25px;margin-top:5px;color:var(--main-text)!important}
+.product-image,.pos-thumb,.thumb,.public-photo,.pe-preview{background:var(--site-background)!important;border-color:var(--surface-border)!important}
+.product-price,.pos-price,.price,.public-info strong,.product-name,.pname,.name,.checkout-total,.total{color:var(--main-text)!important}
+
+/* Все кнопки и навигационные вкладки — один заданный цвет. */
+button,.btn,.top-action,.top-action.muted,.small-btn,.small-btn.success,.small-btn.warning,.small-btn.danger,.logout-btn,.clear-cart,.button,.text-link,.top-action.secondary,.nav-item,.nav,.nav-item.active,.nav.active,.footer-cart,.add{background:var(--button-background)!important;color:var(--button-text)!important;border:1px solid var(--button-background)!important;background-image:none!important;border-radius:10px;cursor:pointer;text-decoration:none}
+button,.btn,.top-action,.small-btn,.button{min-height:42px;padding:10px 16px;font-weight:700;line-height:1.3}
+.nav-item,.nav{display:flex;align-items:center;gap:10px;padding:13px 14px;min-height:48px}
+.nav-item.active,.nav.active{box-shadow:inset 4px 0 0 var(--site-background)}
+button:hover:not(:disabled),.btn:hover,.top-action:hover,.small-btn:hover,.nav-item:hover,.nav:hover{filter:brightness(1.12)}
+button:disabled{opacity:.55;cursor:not-allowed}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-color);outline-offset:3px}
+/* Карточка товара остаётся вставкой; элемент добавления внутри — кнопкой. */
+button.product-card,button.pos-card,button.product{background:var(--surface-background)!important;color:var(--main-text)!important;border:1px solid var(--surface-border)!important;padding:14px;text-align:left;font-weight:400}
+button.product-card:hover:not(:disabled),button.pos-card:hover:not(:disabled){outline:2px solid var(--button-background);outline-offset:1px;filter:none}
+
+/* Касса */
+.pos-layout,.pos{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;align-items:start;gap:24px}
+.catalog-panel{min-width:0}
+.search-bar,.search{display:flex;gap:12px;align-items:stretch;margin-bottom:18px}
+.search-bar input,.search input{flex:1;min-width:0}
+.products-grid,.pos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px}
+.product-image,.pos-thumb{height:112px;display:grid;place-items:center;overflow:hidden;border-radius:10px;margin-bottom:10px}
+.product-image img,.pos-thumb img{width:100%;height:100%;object-fit:cover}
+.checkout-card,.cart{padding:22px;border:1px solid var(--surface-border);border-radius:18px;min-width:0}
+.cart-items{min-height:70px;max-height:360px;overflow:auto;padding:14px 0;border-bottom:1px solid var(--surface-border)!important}
+.cart-line,.cart-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px 0;border-color:var(--surface-border)!important;background:transparent!important}
+.cart-line-name{min-width:0}.cart-line-name small{display:block;color:var(--secondary-text)!important}
+.cart-line-controls{flex-shrink:0;text-align:right}
+.qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty button{width:30px;height:30px;min-height:30px;padding:0;border-radius:7px}
+.checkout-total,.total{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0;font-size:27px;font-weight:800}
+.checkout-total strong{font-size:27px;white-space:nowrap}
+.payment-actions,.pay{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:0}
+.payment-actions button,.pay button{min-width:0;min-height:54px;padding:12px 8px;font-size:16px}
+.clear-cart{width:100%;min-height:52px;margin-top:14px}
+
+/* Таблицы: прокрутка внутри, а не растягивание сайта. */
+.table-wrap,.table-scroll,.table-wrap-inner{max-width:100%;width:100%;overflow-x:auto;border:1px solid var(--surface-border)!important;border-radius:12px}
+table{width:100%;min-width:650px;border-collapse:collapse;background:var(--surface-background)!important;color:var(--main-text)!important}
+th,td{padding:14px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--surface-border)!important}
+thead,th{background:var(--surface-background)!important;color:var(--main-text)!important}
+.row-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.row-actions form{margin:0}
+.row-img{width:48px;height:48px;object-fit:cover;border-radius:8px}
+.empty-cell{color:var(--secondary-text)!important;text-align:center!important;padding:25px!important}
+
+/* Редактор и остальные формы */
+.form-card,.pe-form{max-width:1100px;width:100%}
+.product-form,.employee-form,.form,.pe-form{display:grid;gap:18px}
+.form-columns,.form-grid,.pe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.form-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.field,.pe-field{min-width:0;display:flex;flex-direction:column;gap:7px}
+label,.field label,.pe-field>label{color:var(--main-text)!important;font-weight:600}
+input,select,textarea,.pe-field input:not([type=checkbox]),.pe-field textarea{width:100%;min-width:0;background:var(--field-background)!important;color:var(--main-text)!important;border:1px solid var(--surface-border)!important;padding:12px;border-radius:10px;box-shadow:none!important}
+input::placeholder,textarea::placeholder{color:var(--secondary-text)!important;opacity:1}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--button-background)!important;outline-offset:2px}
+input[type=checkbox],input[type=radio]{width:20px!important;height:20px!important;padding:0;accent-color:var(--button-background);flex-shrink:0}
+.pe-check,.check-line,.checks label,.check{display:flex!important;align-items:center;gap:10px;color:var(--main-text)!important}
+.field small,.pe-field small{color:var(--secondary-text)!important}
+.pe-wide{grid-column:1/-1}
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.toolbar input,.toolbar select{width:auto;flex:1 1 170px;max-width:100%;min-width:0}
+.pe-photo-layout{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:22px}
+.pe-actions,.shift-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pe-panel h2{color:var(--main-text)!important}
+.pe-preview{display:grid;place-items:center;width:180px;min-height:160px;border:1px dashed var(--surface-border);border-radius:12px;color:var(--secondary-text)!important}
+.pe-preview img{width:100%;height:150px;object-fit:contain}
+
+/* Важные сообщения сохраняют сигнальные цвета. */
+.green-notice,.toast{background:var(--warning-background)!important;color:var(--warning-text)!important;border:1px solid #8B732B!important;position:fixed;right:22px;bottom:22px;max-width:min(500px,calc(100% - 32px));padding:16px 20px;border-radius:12px;z-index:120;white-space:pre-line}
+.alert,.pe-alert{background:var(--error-background)!important;color:var(--error-text)!important;border:1px solid #A66A53!important;padding:16px;border-radius:12px}
+.errorlist{color:var(--error-text)!important;background:var(--error-background);border-radius:8px;padding:6px 22px}
+.badge{color:var(--main-text)!important;background:var(--site-background)!important;border:1px solid var(--surface-border);padding:4px 9px;border-radius:20px}
+.low-stock{display:block;color:var(--warning-text)!important;background:var(--warning-background)!important;padding:3px 6px;border-radius:6px;margin-top:6px}
+@media(max-width:1180px){.pos-layout,.pos{grid-template-columns:minmax(0,1fr) 340px}.workspace,.main{padding:22px}.form-four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){.pos-layout,.pos{grid-template-columns:1fr}}
+@media(max-width:900px){.app-shell,.layout,.app{display:block!important}.sidebar{position:sticky;z-index:30;width:100%;height:auto;min-height:0;flex-direction:row;align-items:center;gap:12px;padding:10px;overflow-x:auto}.sidebar .brand,.sidebar .logo{flex:0 0 130px;width:130px;margin:0!important}.side-nav{flex-direction:row;gap:8px}.nav-item,.nav{white-space:nowrap}.sidebar-footer,.sidebar-bottom{display:none}.workspace,.main{padding:18px}}
+@media(max-width:650px){.form-columns,.form-grid,.form-four,.pe-grid,.pe-photo-layout{grid-template-columns:1fr}.pe-wide{grid-column:auto}.page-top,.page-head{flex-direction:column}.content-card,.panel,.card,.pe-panel,.checkout-card{padding:18px}.toolbar>*{flex-basis:100%}.search-bar,.search{flex-wrap:wrap}.search-bar input,.search input{flex-basis:100%}}
+@media(max-width:430px){.payment-actions,.pay{grid-template-columns:1fr}.cart-line{flex-wrap:wrap}.checkout-total,.checkout-total strong{font-size:24px}.products-grid,.pos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ==========================================================
+   ТЕКСТ В ПОИСКЕ, ФОРМАХ ДОБАВЛЕНИЯ И РЕДАКТИРОВАНИЯ ТОВАРА
+
+   Меняйте цвета только в этом блоке переменных.
+   ========================================================== */
+
+:root {
+    /* Введённый текст: название, цена, артикул, поиск и т. д. */
+    --input-text-color: #002e11;
+
+    /* Подсказка внутри пустого поля: «Название, артикул…» */
+    --input-placeholder-color: #36513B;
+
+    /* Названия полей над вводом: «Цена», «Категория» и т. д. */
+    --form-label-color: #b6f3cd;
+
+    /* Пояснения под полями: «Можно оставить пустым» */
+    --form-help-color: #7dc28d;
+
+    /* Заголовки блоков: «Основные данные», «Цена и склад» */
+    --form-heading-color: #000000;
+
+    /* Текст выделенного фрагмента внутри поля */
+    --input-selection-text: #FFFFFF;
+
+    /* Фон выделенного фрагмента внутри поля */
+    --input-selection-background: #17482C;
+}
+
+
+/* ----------------------------------------------------------
+   1. ВВЕДЁННЫЙ ТЕКСТ В ПОЛЯХ
+   Поиск, добавление товара, редактирование и другие формы.
+   Чекбоксы, переключатели и кнопки сюда не относятся.
+   ---------------------------------------------------------- */
+
+body input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="hidden"]),
+body textarea,
+body select,
+body select option,
+body .pe-field input:not([type="checkbox"]):not([type="radio"]),
+body .pe-field textarea,
+body .pe-field select {
+    color: var(--input-text-color) !important;
+    caret-color: var(--input-text-color);
+}
+
+
+/* ----------------------------------------------------------
+   2. ПОДСКАЗКИ ВНУТРИ ПУСТЫХ ПОЛЕЙ
+   ---------------------------------------------------------- */
+
+body input::placeholder,
+body textarea::placeholder {
+    color: var(--input-placeholder-color) !important;
+    opacity: 1;
+}
+
+
+/* ----------------------------------------------------------
+   3. ПОДПИСИ НАД ПОЛЯМИ И РЯДОМ С ЧЕКБОКСАМИ
+   ---------------------------------------------------------- */
+
+body label,
+body .field label,
+body .pe-field > label,
+body .product-form label,
+body .employee-form label,
+body .pe-check,
+body .check-line,
+body .checks label,
+body .check {
+    color: var(--form-label-color) !important;
+}
+
+
+/* ----------------------------------------------------------
+   4. ВСПОМОГАТЕЛЬНЫЕ ПОЯСНЕНИЯ ПОД ПОЛЯМИ
+   ---------------------------------------------------------- */
+
+body .field small,
+body .pe-field small,
+body .product-form .helptext,
+body .employee-form .helptext,
+body .pe-form .helptext {
+    color: var(--form-help-color) !important;
+}
+
+
+/* ----------------------------------------------------------
+   5. ЗАГОЛОВКИ БЛОКОВ В ФОРМАХ
+   ---------------------------------------------------------- */
+
+body .pe-panel h2,
+body .form-card h2,
+body .form-card h3 {
+    color: var(--form-heading-color) !important;
+}
+
+
+/* ----------------------------------------------------------
+   6. ВЫДЕЛЕНИЕ ТЕКСТА В ПОЛЯХ
+   ---------------------------------------------------------- */
+
+body input::selection,
+body textarea::selection {
+    color: var(--input-selection-text);
+    background: var(--input-selection-background);
+}

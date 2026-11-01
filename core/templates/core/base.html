@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Лазер Мастер ОК{% endblock %}</title>
+
+    <!-- Основная вёрстка -->
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+    <!-- Предыдущее оформление -->
+    <link rel="stylesheet" href="{% static 'css/green-theme.css' %}?v=2">
+
+    <!-- Новая палитра — подключается последней -->
+    <link rel="stylesheet" href="{% static 'css/site-palette.css' %}?v=2">
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+</html>
